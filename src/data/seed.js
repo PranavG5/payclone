@@ -142,6 +142,35 @@ export function generateSeed({ userCount = 240, txCount = 600 } = {}) {
     })
   }
 
+  // The home feed shows the signed-in persona's own activity, so give them a
+  // dense history of their own rather than the handful a purely random pairing
+  // would produce.
+  const MY_NOTES = [
+    'Oral services', 'gas', 'Cinemark USA', 'dinner', 'rent', 'concert tickets',
+    'groceries', 'coffee', 'the cab', 'lunch', 'utilities', 'the tab',
+    'pizza', 'ski trip', 'birthday gift', 'parking', 'ramen', 'brunch',
+    'the hotel', 'climbing gym', 'sushi', 'wifi', 'movie night', 'boba',
+  ]
+  for (let i = 0; i < 34; i++) {
+    const other = users[1 + Math.floor(rng() * (users.length - 1))]
+    const iPaid = rng() > 0.22
+    const rp = rng()
+    const privacy = rp > 0.55 ? 'private' : rp > 0.25 ? 'friends' : 'public'
+    transactions.push({
+      id: 'tm_' + i,
+      fromId: iPaid ? me.id : other.id,
+      toId: iPaid ? other.id : me.id,
+      amount: Math.round((rng() * 90 + 4) * 100) / 100,
+      note: pick(rng, MY_NOTES),
+      privacy,
+      kind: 'payment',
+      createdAt: now - Math.floor(rng() * 150 * 24 * 60 * 60 * 1000),
+      likes: Math.floor(rng() * rng() * 6),
+      comments: Math.floor(rng() * rng() * 4),
+      audience: [],
+    })
+  }
+
   transactions.sort((x, y) => y.createdAt - x.createdAt)
 
   return {

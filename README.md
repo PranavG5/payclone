@@ -41,9 +41,9 @@ src/
     store.jsx       React context over localStorage; all selectors + mutations
   components/
     AppLayout.jsx   Phone-shaped app shell: fixed header, scrolling content,
-                    bottom nav, and the slide-out drawer
-    Drawer.jsx      Hamburger menu: profile, balance, nav, sign out
+                    and the five-tab bottom nav with its raised centre action
     TransactionCard.jsx
+    MiniAvatar.jsx        Inline initial bubble used inside feed sentences
     MockDataManager.jsx   The demo-data admin panel
     ProfileEditor.jsx     Edit every field of the signed-in persona
     AvatarPicker.jsx      Shared upload / generate avatar control
@@ -70,6 +70,17 @@ arbitrary values:
 
 These values were sampled pixel-by-pixel from a reference screenshot of the
 real mobile web app rather than eyeballed.
+
+### Home screen
+
+`src/pages/Home.jsx` matches a reference capture of the native app's feed at
+390x844: a headerless top with the search pill and scan button, a promo
+carousel, then 187px activity cards (privacy line, an inline-avatar sentence,
+a black "Pay again" pill and three 39px chips) at an 8px page margin.
+
+Third-party brand tiles in that row are replaced with neutral placeholders —
+the layout is reproduced, the branding is not. `Cards` and `Crypto` are
+deliberate stubs so the five-tab bar is complete.
 
 ### Pay & Request screen
 

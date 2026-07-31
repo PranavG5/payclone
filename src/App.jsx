@@ -7,6 +7,7 @@ import Search from './pages/Search.jsx'
 import Profile from './pages/Profile.jsx'
 import Pay from './pages/Pay.jsx'
 import Settings from './pages/Settings.jsx'
+import Placeholder from './pages/Placeholder.jsx'
 
 export default function App() {
   const { loggedIn } = useStore()
@@ -27,6 +28,8 @@ export default function App() {
         <Route path="/u/:id" element={<Profile />} />
         <Route path="/pay" element={<Pay />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/cards" element={<Placeholder kind="cards" />} />
+        <Route path="/crypto" element={<Placeholder kind="crypto" />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

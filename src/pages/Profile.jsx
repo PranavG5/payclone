@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useStore } from '../store/store.jsx'
 import Avatar from '../components/Avatar.jsx'
 import TransactionCard from '../components/TransactionCard.jsx'
@@ -8,7 +8,6 @@ import { money, fullDate } from '../lib/format.js'
 
 export default function Profile() {
   const { id } = useParams()
-  const navigate = useNavigate()
   const { getUser, userTransactions, currentUser } = useStore()
   const user = getUser(id)
 
@@ -32,13 +31,6 @@ export default function Profile() {
 
   return (
     <div className="px-4 pb-6 pt-4">
-      <button
-        onClick={() => navigate(-1)}
-        className="mb-3 flex items-center gap-1 text-[14px] font-medium text-ink-muted hover:text-ink"
-      >
-        <Icon name="arrowLeft" size={18} /> Back
-      </button>
-
       <div className="card overflow-hidden">
         <div className="h-24 bg-gradient-to-r from-venmo-blue to-venmo-blueDark" />
         <div className="px-5 pb-5">

@@ -22,6 +22,14 @@ const paths = {
   camera: <><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2Z" /><circle cx="12" cy="13" r="4" /></>,
   shield: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />,
   menu: <path d="M3 6h18M3 12h18M3 18h18" />,
+  // Privacy indicator on feed cards — the reference uses a lashes/eye-off mark.
+  eyeOff: <path d="M2 10c1.6 2.2 5 5 10 5s8.4-2.8 10-5M4 14l-1.6 2.4M20 14l1.6 2.4M9 16l-.7 2.6M15 16l.7 2.6" />,
+  dots: <><circle cx="5" cy="12" r="1.6" fill="currentColor" stroke="none" /><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none" /><circle cx="19" cy="12" r="1.6" fill="currentColor" stroke="none" /></>,
+  bubble: <path d="M20 11.5c0 3.6-3.6 6.5-8 6.5-.9 0-1.8-.1-2.6-.3L4 20l1.3-3.4C4.2 15.3 3.5 13.5 3.5 11.5 3.5 7.9 7.1 5 11.5 5s8.5 2.9 8.5 6.5Z" />,
+  smilePlus: <><circle cx="11" cy="12" r="8" /><path d="M8 11h.01M14 11h.01M8.5 15c.7.8 1.6 1.2 2.5 1.2s1.8-.4 2.5-1.2M19 4v4M17 6h4" /></>,
+  card: <><rect x="2" y="5" width="20" height="14" rx="2.5" /><path d="M2 10h20" /></>,
+  crypto: <><circle cx="12" cy="12" r="9" /><path d="M10 8h3.2a2.4 2.4 0 0 1 0 4.8H10V8Zm0 4.8h3.6a2.4 2.4 0 0 1 0 4.8H10v-4.8ZM11.5 6v2m0 8v2" /></>,
+  qr: <><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><path d="M14 14h3v3h-3zM20 14v.01M20 20v.01M17 20v.01M14 20v.01M20 17v.01" /></>,
 }
 
 // Solid-fill glyphs (the stroke-based set above doesn't cover these).

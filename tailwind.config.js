@@ -25,6 +25,19 @@ export default {
           // averaged over a whole CSS pixel.
           line: '#D7D9DB',
           app: '#E4E6EA',
+          // Home feed chrome, sampled from the native-app reference.
+          feed: '#EDEDEF',
+          chip: '#F5F5F7',
+          field: '#FBFBFC',
+        },
+        nav: {
+          active: '#042FA4',
+          idle: '#0074DE',
+        },
+        meta: {
+          // Connective words ("paid", "for") and the privacy/date line.
+          soft: '#8F8F8F',
+          privacy: '#666666',
         },
         state: {
           green: '#1DB954',

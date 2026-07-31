@@ -25,6 +25,14 @@ export function relativeTime(ts) {
   return `${Math.floor(d / 365)}y`
 }
 
+// Feed timestamps: relative inside a week ("3d"), then an absolute
+// month/day ("Jun 6"), matching the reference feed.
+export function feedDate(ts) {
+  const days = (Date.now() - ts) / 86400000
+  if (days < 7) return relativeTime(ts)
+  return new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+}
+
 export function fullDate(ts) {
   return new Date(ts).toLocaleDateString('en-US', {
     month: 'short',
