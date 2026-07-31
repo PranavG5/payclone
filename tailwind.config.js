@@ -4,24 +4,27 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Core Venmo-style palette
+        // Palette sampled directly from the reference mobile screenshot.
         venmo: {
-          blue: '#008CFF',
-          blueHover: '#0074D4',
-          blueDark: '#0057B8',
-          blueLight: '#E6F4FF',
+          blue: '#0074DE',
+          blueHover: '#0063BE',
+          blueDark: '#00539F',
+          blueLight: '#E7F1FC',
         },
         ink: {
-          DEFAULT: '#2F3033',
-          muted: '#6B6E76',
-          soft: '#8B8E95',
-          faint: '#AAAEB5',
+          DEFAULT: '#2F3032',
+          muted: '#6B7076',
+          soft: '#878C94',
+          faint: '#A7A8A9',
         },
         surface: {
           page: '#F7F7F7',
           card: '#FFFFFF',
           hover: '#F2F4F7',
-          line: '#E9EAED',
+          // Field borders read as this once the reference hairline is
+          // averaged over a whole CSS pixel.
+          line: '#D7D9DB',
+          app: '#E4E6EA',
         },
         state: {
           green: '#1DB954',

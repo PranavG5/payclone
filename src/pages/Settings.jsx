@@ -32,8 +32,7 @@ export default function Settings() {
   }
 
   return (
-    <div className="space-y-5">
-      <h1 className="text-[22px] font-bold text-ink">Settings</h1>
+    <div className="space-y-5 px-4 pb-8 pt-4">
 
       {toast && (
         <div className="rounded-xl bg-state-green/10 px-4 py-2.5 text-[13px] font-medium text-state-green animate-fade-in">

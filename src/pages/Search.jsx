@@ -20,8 +20,7 @@ export default function Search() {
     : db.users.filter((u) => !u.isDemoSelf).slice(0, 30)
 
   return (
-    <div>
-      <h1 className="mb-4 text-[22px] font-bold text-ink">Search people</h1>
+    <div className="px-4 pb-6 pt-4">
 
       <div className="relative mb-5">
         <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-soft">

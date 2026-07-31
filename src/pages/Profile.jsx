@@ -31,7 +31,7 @@ export default function Profile() {
   const isSelf = user.id === currentUser.id
 
   return (
-    <div>
+    <div className="px-4 pb-6 pt-4">
       <button
         onClick={() => navigate(-1)}
         className="mb-3 flex items-center gap-1 text-[14px] font-medium text-ink-muted hover:text-ink"

@@ -86,7 +86,7 @@ export function generateSeed({ userCount = 240, txCount = 600 } = {}) {
     joined: '2021-03-14',
     email: '',
     phone: '',
-    defaultPrivacy: 'friends',
+    defaultPrivacy: 'private',
     isDemoSelf: true,
   }
 

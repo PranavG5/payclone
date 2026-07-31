@@ -31,12 +31,11 @@ export default function Home() {
   const shown = feed.slice(0, visible)
 
   return (
-    <div>
-      {/* Pay or Request CTA — prominent on mobile where the sidebar is hidden */}
-      <div className="mb-4 lg:hidden">
+    <div className="px-4 pb-6 pt-4">
+      <div className="mb-4">
         <Link
           to="/pay"
-          className="flex items-center justify-center gap-2 rounded-pill bg-venmo-blue py-3 text-[15px] font-semibold text-white shadow-fab"
+          className="flex items-center justify-center gap-2 rounded-pill bg-venmo-blue py-3 text-[15px] font-semibold text-white"
         >
           <Icon name="plus" size={18} strokeWidth={2.6} />
           Pay or Request

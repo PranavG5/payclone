@@ -10,6 +10,10 @@ learning and portfolio project.
 > payment processing, and no real account. Every person, balance, and
 > transaction is fictional and generated locally in your browser.
 
+Built **mobile-first**: the UI is a phone-width column (max 430px). On wider
+screens it letterboxes on a neutral backdrop rather than reflowing to a
+desktop layout.
+
 ## Stack
 
 - **React 18** + **React Router 6**
@@ -36,13 +40,14 @@ src/
   store/
     store.jsx       React context over localStorage; all selectors + mutations
   components/
-    AppLayout.jsx   Shell: banner + header + sidebar + mobile bottom nav
-    Header.jsx      Sticky header with the live search dropdown
-    Sidebar.jsx     Profile card, balance, Pay-or-Request CTA, nav
-    SearchBox.jsx   Typeahead with keyboard navigation
+    AppLayout.jsx   Phone-shaped app shell: fixed header, scrolling content,
+                    bottom nav, and the slide-out drawer
+    Drawer.jsx      Hamburger menu: profile, balance, nav, sign out
     TransactionCard.jsx
     MockDataManager.jsx   The demo-data admin panel
-    Avatar.jsx, Icon.jsx, DemoBanner.jsx, FeedSkeleton.jsx
+    ProfileEditor.jsx     Edit every field of the signed-in persona
+    AvatarPicker.jsx      Shared upload / generate avatar control
+    Avatar.jsx, Icon.jsx, FeedSkeleton.jsx
   pages/
     Login.jsx  Home.jsx  Search.jsx  Profile.jsx  Pay.jsx  Settings.jsx
 ```
@@ -54,13 +59,28 @@ arbitrary values:
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `venmo-blue` | `#008CFF` | Primary actions, active nav, links |
-| `venmo-blueLight` | `#E6F4FF` | Selected rows, balance card |
+| `venmo-blue` | `#0074DE` | Primary actions, active nav, links |
+| `venmo-blueLight` | `#E7F1FC` | Selected rows, balance card |
 | `surface-page` | `#F7F7F7` | App background |
 | `surface-card` | `#FFFFFF` | Cards |
-| `surface-line` | `#E9EAED` | Dividers and borders |
-| `ink` / `ink-muted` / `ink-soft` | `#2F3033` / `#6B6E76` / `#8B8E95` | Text hierarchy |
+| `surface-line` | `#D7D9DB` | Field borders and dividers |
+| `surface-app` | `#E4E6EA` | Backdrop behind the phone column |
+| `ink` / `ink-muted` / `ink-soft` / `ink-faint` | `#2F3032` / `#6B7076` / `#878C94` / `#A7A8A9` | Text hierarchy |
 | `state-green` | `#1DB954` | Incoming amounts, success |
+
+These values were sampled pixel-by-pixel from a reference screenshot of the
+real mobile web app rather than eyeballed.
+
+### Pay & Request screen
+
+`src/pages/Pay.jsx` is matched to that reference at a 390x844 viewport:
+the amount row, the 50px `To` field, the 149px note box, the privacy
+explainer, and the 46px button pills all land within a pixel of the original.
+
+Text is sized for the system UI font (SF Pro on iOS, Roboto on Android) via
+the `-apple-system` stack. On Linux — including CI screenshots — that falls
+back to Liberation Sans, which is metrically Arial-like and renders roughly
+7% wider, so text-wrap points will differ there from a real phone.
 
 Reusable component classes (`.btn-primary`, `.field`, `.card`, `.skeleton`)
 are defined in `src/index.css` under `@layer components`.

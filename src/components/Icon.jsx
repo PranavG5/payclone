@@ -21,6 +21,49 @@ const paths = {
   send: <path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z" />,
   camera: <><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2Z" /><circle cx="12" cy="13" r="4" /></>,
   shield: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />,
+  menu: <path d="M3 6h18M3 12h18M3 18h18" />,
+}
+
+// Solid-fill glyphs (the stroke-based set above doesn't cover these).
+const filled = {
+  person: (
+    <path
+      d="M12 12.4a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4Zm0 1.8c-3.6 0-7 1.9-7 4.2v1.4a.8.8 0 0 0 .8.8h12.4a.8.8 0 0 0 .8-.8v-1.4c0-2.3-3.4-4.2-7-4.2Z"
+      fill="currentColor"
+    />
+  ),
+  globe: (
+    <path
+      d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm6.9 6h-2.6a15.6 15.6 0 0 0-1.4-3.5A8 8 0 0 1 18.9 8ZM12 4.2c.7 1 1.3 2.3 1.7 3.8h-3.4c.4-1.5 1-2.8 1.7-3.8ZM4.3 14a7.9 7.9 0 0 1 0-4h3a17.6 17.6 0 0 0 0 4Zm.8 2h2.6c.3 1.3.8 2.5 1.4 3.5A8 8 0 0 1 5.1 16Zm2.6-8H5.1a8 8 0 0 1 4-3.5C8.5 5.5 8 6.7 7.7 8ZM12 19.8c-.7-1-1.3-2.3-1.7-3.8h3.4c-.4 1.5-1 2.8-1.7 3.8ZM14.1 14H9.9a15.5 15.5 0 0 1 0-4h4.2a15.5 15.5 0 0 1 0 4Zm.8 5.5c.6-1 1.1-2.2 1.4-3.5h2.6a8 8 0 0 1-4 3.5Zm1.8-5.5a17.6 17.6 0 0 0 0-4h3a7.9 7.9 0 0 1 0 4Z"
+      fill="currentColor"
+    />
+  ),
+  lock: (
+    <path
+      d="M17 9h-1V7a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2Zm-7-2a2 2 0 0 1 4 0v2h-4Z"
+      fill="currentColor"
+    />
+  ),
+  users: (
+    <path
+      d="M9 11.5a3.75 3.75 0 1 0 0-7.5 3.75 3.75 0 0 0 0 7.5Zm7.2.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM9 13.2c-3.3 0-6.4 1.7-6.4 3.9v1.4c0 .4.3.7.8.7h11.2c.5 0 .8-.3.8-.7v-1.4c0-2.2-3.1-3.9-6.4-3.9Zm7.2.3c-.6 0-1.2.1-1.7.2 1.1.9 1.8 2 1.8 3.4v1.4c0 .3 0 .5-.1.7h4.6c.4 0 .7-.3.7-.7v-1.2c0-1.9-2.4-3.8-5.3-3.8Z"
+      fill="currentColor"
+    />
+  ),
+}
+
+export function FilledIcon({ name, size = 20, className = '' }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+    >
+      {filled[name] || null}
+    </svg>
+  )
 }
 
 export default function Icon({ name, size = 22, className = '', strokeWidth = 2, ...rest }) {
