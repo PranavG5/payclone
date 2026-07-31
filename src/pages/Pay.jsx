@@ -55,10 +55,10 @@ function PickRecipient({ onPick }) {
 }
 
 // --- Step 2: amount + note + privacy -------------------------------------
-function Compose({ recipient, mode, setMode, onBack, onSubmit }) {
+function Compose({ recipient, mode, setMode, onBack, onSubmit, defaultPrivacy }) {
   const [amount, setAmount] = useState('')
   const [note, setNote] = useState('')
-  const [privacy, setPrivacy] = useState('friends')
+  const [privacy, setPrivacy] = useState(defaultPrivacy)
 
   const numeric = parseFloat(amount)
   const valid = numeric > 0 && note.trim().length > 0
@@ -282,6 +282,7 @@ export default function Pay() {
         recipient={recipient}
         mode={mode}
         setMode={setMode}
+        defaultPrivacy={currentUser.defaultPrivacy || 'friends'}
         onBack={() => (initialTo ? navigate(-1) : setRecipient(null))}
         onSubmit={submit}
       />

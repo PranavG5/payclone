@@ -15,7 +15,7 @@ export default function Sidebar() {
   const { pathname } = useLocation()
 
   return (
-    <aside className="sticky top-[112px] hidden h-fit w-[240px] shrink-0 lg:block">
+    <aside className="sticky top-[88px] hidden h-fit w-[240px] shrink-0 lg:block">
       <div className="card p-4">
         <Link to={`/u/${currentUser.id}`} className="flex items-center gap-3">
           <Avatar user={currentUser} size={48} />

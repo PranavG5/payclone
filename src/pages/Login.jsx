@@ -13,12 +13,6 @@ export default function Login() {
 
   return (
     <div className="relative flex min-h-full flex-col overflow-hidden bg-venmo-blue text-white">
-      {/* Demo notice pinned to top, even pre-login */}
-      <div className="flex items-center justify-center gap-2 bg-state-amber px-4 py-1.5 text-center text-[12px] font-semibold text-[#3d2c00]">
-        <Icon name="shield" size={14} strokeWidth={2.5} />
-        DEMO APP — NOT REAL. Fictional data only, stored in your browser.
-      </div>
-
       {/* soft decorative blobs */}
       <div className="pointer-events-none absolute -left-20 -top-10 h-72 w-72 rounded-full bg-white/10 blur-2xl" />
       <div className="pointer-events-none absolute -right-16 top-1/3 h-80 w-80 rounded-full bg-white/10 blur-3xl" />

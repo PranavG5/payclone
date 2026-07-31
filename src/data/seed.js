@@ -84,6 +84,9 @@ export function generateSeed({ userCount = 240, txCount = 600 } = {}) {
     balance: 214.72,
     bio: 'Just here testing the UI 🧪',
     joined: '2021-03-14',
+    email: '',
+    phone: '',
+    defaultPrivacy: 'friends',
     isDemoSelf: true,
   }
 

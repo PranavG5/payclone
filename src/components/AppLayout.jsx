@@ -1,7 +1,6 @@
 import { Link, useLocation, Outlet } from 'react-router-dom'
 import Header from './Header.jsx'
 import Sidebar from './Sidebar.jsx'
-import DemoBanner from './DemoBanner.jsx'
 import Icon from './Icon.jsx'
 
 const MOBILE_NAV = [
@@ -53,7 +52,6 @@ function MobileNav() {
 export default function AppLayout() {
   return (
     <div className="min-h-full">
-      <DemoBanner />
       <Header />
       <div className="mx-auto flex max-w-[1000px] gap-6 px-4 pb-24 pt-6 lg:pb-10">
         <Sidebar />

@@ -1,8 +1,8 @@
-import { useMemo, useRef, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useStore } from '../store/store.jsx'
 import Avatar from './Avatar.jsx'
+import AvatarPicker from './AvatarPicker.jsx'
 import Icon from './Icon.jsx'
-import { avatarFor } from '../data/avatar.js'
 import { money } from '../lib/format.js'
 
 const BLANK = { displayName: '', handle: '', balance: '', bio: '', avatar: '' }
@@ -20,58 +20,26 @@ function Field({ label, ...props }) {
 // Create / edit form for a single fictional persona.
 function PersonaForm({ initial, onCancel, onSave, saveLabel }) {
   const [form, setForm] = useState({ ...BLANK, ...initial })
-  const fileRef = useRef(null)
-
-  const preview =
-    form.avatar || avatarFor(form.handle || 'preview', form.displayName || form.handle || '?')
+  const [fileError, setFileError] = useState('')
 
   function set(k, v) {
     setForm((f) => ({ ...f, [k]: v }))
   }
 
-  function onFile(e) {
-    const file = e.target.files?.[0]
-    if (!file) return
-    if (file.size > 400 * 1024) {
-      alert('Please choose an image under 400KB — it is stored inline in localStorage.')
-      return
-    }
-    const reader = new FileReader()
-    reader.onload = () => set('avatar', String(reader.result))
-    reader.readAsDataURL(file)
-  }
-
   return (
     <div className="rounded-xl border border-surface-line bg-surface-page p-4">
-      <div className="flex items-start gap-4">
-        <div className="flex flex-col items-center gap-2">
-          <img
-            src={preview}
-            alt=""
-            className="h-16 w-16 rounded-full bg-white object-cover"
-          />
-          <button
-            onClick={() => fileRef.current?.click()}
-            className="flex items-center gap-1 text-[11px] font-semibold text-venmo-blue hover:underline"
-          >
-            <Icon name="camera" size={13} /> Upload
-          </button>
-          {form.avatar && (
-            <button
-              onClick={() => set('avatar', '')}
-              className="text-[11px] text-ink-soft hover:underline"
-            >
-              Use generated
-            </button>
-          )}
-          <input
-            ref={fileRef}
-            type="file"
-            accept="image/*"
-            onChange={onFile}
-            className="hidden"
-          />
-        </div>
+      <div className="flex flex-col items-start gap-4 sm:flex-row">
+        <AvatarPicker
+          value={form.avatar}
+          onChange={(v) => {
+            setFileError('')
+            set('avatar', v)
+          }}
+          seed={form.handle || 'preview'}
+          label={form.displayName || form.handle}
+          size={64}
+          onError={setFileError}
+        />
 
         <div className="grid flex-1 gap-3 sm:grid-cols-2">
           <Field
@@ -102,6 +70,12 @@ function PersonaForm({ initial, onCancel, onSave, saveLabel }) {
           />
         </div>
       </div>
+
+      {fileError && (
+        <p className="mt-3 rounded-xl bg-state-red/10 px-4 py-2.5 text-[12.5px] font-medium text-state-red">
+          {fileError}
+        </p>
+      )}
 
       <div className="mt-4 flex justify-end gap-2">
         <button onClick={onCancel} className="btn-ghost">Cancel</button>

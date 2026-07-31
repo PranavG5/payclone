@@ -208,6 +208,23 @@ export function StoreProvider({ children }) {
     }))
   }, [])
 
+  // Edits the signed-in persona. Same machinery as editing any mock user —
+  // "you" are just another row in the local database.
+  const updateProfile = useCallback(
+    (patch) => updateMockUser(db.currentUserId, patch),
+    [updateMockUser, db.currentUserId]
+  )
+
+  // True when another persona already owns this handle.
+  const isHandleTaken = useCallback(
+    (handle, exceptId) => {
+      const h = String(handle).toLowerCase().replace(/[^a-z0-9_.]/g, '')
+      if (!h) return false
+      return db.users.some((u) => u.id !== exceptId && u.handle === h)
+    },
+    [db.users]
+  )
+
   const deleteMockUser = useCallback(
     (id) => {
       if (id === CURRENT_USER_ID) return // never delete the demo self
@@ -266,6 +283,8 @@ export function StoreProvider({ children }) {
       userTransactions,
       createTransaction,
       toggleLike,
+      updateProfile,
+      isHandleTaken,
       // admin
       addMockUser,
       updateMockUser,
@@ -278,6 +297,7 @@ export function StoreProvider({ children }) {
       db, loggedIn, login, logout, currentUser, usersById, getUser, searchUsers,
       feedFor, userTransactions, createTransaction, toggleLike, addMockUser,
       updateMockUser, deleteMockUser, regenerateAvatar, resetData, clearAllData,
+      updateProfile, isHandleTaken,
     ]
   )
 
