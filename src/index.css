@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-surface-page text-ink antialiased;
+    font-feature-settings: 'kern';
+  }
+
+  /* Remove number input spinners for the amount field */
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-pill bg-venmo-blue px-6 py-3
+      text-[15px] font-semibold text-white transition-colors hover:bg-venmo-blueHover
+      active:bg-venmo-blueDark disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-pill border border-surface-line
+      bg-white px-6 py-3 text-[15px] font-semibold text-venmo-blue transition-colors
+      hover:bg-surface-hover disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-pill px-4 py-2 text-[15px]
+      font-semibold text-ink-muted transition-colors hover:bg-surface-hover;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-surface-line bg-white px-4 py-3 text-[15px]
+      text-ink placeholder:text-ink-faint focus:border-venmo-blue focus:outline-none
+      focus:ring-2 focus:ring-venmo-blue/20;
+  }
+
+  .card {
+    @apply rounded-card bg-surface-card shadow-card;
+  }
+
+  .skeleton {
+    @apply rounded bg-[length:800px_100%] animate-shimmer;
+    background-image: linear-gradient(
+      90deg,
+      #eceef1 0px,
+      #f6f7f8 200px,
+      #eceef1 400px
+    );
+  }
+}
+
+/* Thin, subtle scrollbars to match the app chrome */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d4d6db transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #d4d6db;
+  border-radius: 999px;
+}
