@@ -82,6 +82,13 @@ Third-party brand tiles in that row are replaced with neutral placeholders —
 the layout is reproduced, the branding is not. `Cards` and `Crypto` are
 deliberate stubs so the five-tab bar is complete.
 
+The tab bar (`src/components/NavGlyph.jsx` + `AppLayout.jsx`) is matched to a
+reference crop: solid 24px glyphs, an 8px notification dot on `Cards`, 15px
+semibold labels, and a 56px centre disc whose midpoint sits exactly on the
+bar's top edge (28px of overhang) inside a 5px white ring. The centre column
+is given `flex-[1.35]` so the five tab centres land where the reference puts
+them — its wide "Pay/Request" label pushes its neighbours outward.
+
 ### Pay & Request screen
 
 `src/pages/Pay.jsx` is matched to that reference at a 390x844 viewport:

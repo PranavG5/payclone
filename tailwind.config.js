@@ -31,8 +31,9 @@ export default {
           field: '#FBFBFC',
         },
         nav: {
-          active: '#042FA4',
+          active: '#06269B',
           idle: '#0074DE',
+          badge: '#D0242E',
         },
         meta: {
           // Connective words ("paid", "for") and the privacy/date line.
