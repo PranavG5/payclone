@@ -89,6 +89,19 @@ bar's top edge (28px of overhang) inside a 5px white ring. The centre column
 is given `flex-[1.35]` so the five tab centres land where the reference puts
 them — its wide "Pay/Request" label pushes its neighbours outward.
 
+The centre mark (`src/assets/vee-mark.png`) was lifted out of that reference
+rather than redrawn: each pixel's coverage was recovered into an alpha
+channel, so the original anti-aliasing is preserved. It is sized to its native
+65x71 so it renders 1:1 on a 3x phone with no resampling.
+
+### Paying someone who doesn't exist yet
+
+The `To` field on Pay & Request offers whatever you type as a recipient, marked
+`New`, even when no persona matches. Selecting it only builds a provisional
+record; the persona is written to the local database at the moment a payment is
+sent, so the transaction, feed card, search and profile all resolve normally
+afterwards. Handles are de-duplicated on creation.
+
 ### Pay & Request screen
 
 `src/pages/Pay.jsx` is matched to that reference at a 390x844 viewport:

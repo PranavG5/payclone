@@ -1,3 +1,5 @@
+import veeMark from '../assets/vee-mark.png'
+
 // Solid 24px tab-bar glyphs. The reference tab bar uses filled marks rather
 // than the stroked icons used elsewhere in the app, so these live apart from
 // the general Icon set.
@@ -55,22 +57,23 @@ export function CryptoGlyph({ className }) {
   )
 }
 
-// The centre action mark: a bold V letterform with a heavy left stroke, a
-// lighter right stroke and a near-pointed vertex, drawn to sit inside the disc.
-export function VeeMark({ size = 34, className = 'text-white' }) {
+// The centre action mark. Rather than approximating the letterform with a
+// hand-drawn path, this is the glyph lifted straight out of the reference
+// screenshot: its per-pixel coverage was recovered into an alpha channel, so
+// the original anti-aliased edges are preserved exactly.
+//
+// Sized to the asset's native 65x71 pixels, which on a 3x phone renders 1:1
+// with no resampling — the reference is a 3x capture, so this keeps the
+// anti-aliasing identical rather than re-blurring it. (A percentage of the
+// disc would survive a resize but softens the tips.)
+export function VeeMark({ className = '' }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 100 100"
-      className={className}
+    <img
+      src={veeMark}
+      alt=""
       aria-hidden="true"
-    >
-      <path
-        fill="currentColor"
-        strokeLinejoin="round"
-        d="M15 11h25.5l13.5 43L66.5 11H85L57.5 91H45.5Z"
-      />
-    </svg>
+      draggable={false}
+      className={'h-[23.667px] w-[21.667px] select-none ' + className}
+    />
   )
 }

@@ -4,6 +4,30 @@ import { useStore } from '../store/store.jsx'
 import Avatar from '../components/Avatar.jsx'
 import Icon, { FilledIcon } from '../components/Icon.jsx'
 import { money } from '../lib/format.js'
+import { avatarFor } from '../data/avatar.js'
+
+// Anything typed into "To" is offered as a recipient, whether or not a persona
+// by that name exists yet. Selecting one of these builds a provisional record;
+// it is only written to the local database if a payment is actually sent.
+function adHocRecipient(query, takenHandles) {
+  const raw = query.trim()
+  if (!raw) return null
+  const displayName = raw.startsWith('@') ? raw.slice(1).trim() : raw
+  if (!displayName) return null
+  const base =
+    displayName.toLowerCase().replace(/[^a-z0-9_.]/g, '') || displayName.toLowerCase()
+  // Show the handle this persona will actually get, so the row doesn't promise
+  // one thing and the created record show another.
+  let handle = base
+  for (let n = 2; takenHandles.has(handle); n++) handle = `${base}${n}`
+  return {
+    adHoc: true,
+    id: null,
+    displayName,
+    handle,
+    avatar: avatarFor('adhoc:' + displayName.toLowerCase(), displayName),
+  }
+}
 
 // Copy mirrors the reference screen's privacy explainer.
 const PRIVACY = [
@@ -79,7 +103,8 @@ function Success({ recipient, mode, amount, note, onAnother }) {
 }
 
 export default function Pay() {
-  const { getUser, currentUser, createTransaction, searchUsers } = useStore()
+  const { getUser, currentUser, createTransaction, searchUsers, addMockUser, db } =
+    useStore()
   const [params] = useSearchParams()
   const navigate = useNavigate()
 
@@ -116,7 +141,20 @@ export default function Pay() {
     return () => document.removeEventListener('mousedown', onDown)
   }, [])
 
-  const suggestions = toQuery.trim() && !recipient ? searchUsers(toQuery, 6) : []
+  const matches = toQuery.trim() && !recipient ? searchUsers(toQuery, 6) : []
+  // Offer the typed text itself unless an existing persona already answers to it.
+  const typed = !recipient
+    ? adHocRecipient(toQuery, new Set(db.users.map((u) => u.handle)))
+    : null
+  const duplicate =
+    typed &&
+    matches.some(
+      (u) =>
+        u.displayName.toLowerCase() === typed.displayName.toLowerCase() ||
+        u.handle === typed.handle
+    )
+  const suggestions = [...matches, ...(typed && !duplicate ? [typed] : [])]
+
   const active = PRIVACY.find((p) => p.id === privacy) || PRIVACY[0]
   const numeric = parseFloat(amount) || 0
 
@@ -130,12 +168,26 @@ export default function Pay() {
       return
     }
     setError('')
+
+    // A provisional recipient becomes a real persona at the moment money moves,
+    // so the transaction, the feed card and their profile all resolve normally.
+    let target = recipient
+    if (recipient.adHoc) {
+      target = addMockUser({
+        displayName: recipient.displayName,
+        handle: recipient.handle,
+        balance: 0,
+        avatar: recipient.avatar,
+      })
+      setRecipient(target)
+    }
+
     setResult({ mode, amount: numeric, note: note.trim() })
     setStatus('processing')
     setTimeout(() => {
       createTransaction({
-        fromId: mode === 'pay' ? currentUser.id : recipient.id,
-        toId: mode === 'pay' ? recipient.id : currentUser.id,
+        fromId: mode === 'pay' ? currentUser.id : target.id,
+        toId: mode === 'pay' ? target.id : currentUser.id,
         amount: numeric,
         note: note.trim(),
         privacy,
@@ -237,7 +289,7 @@ export default function Pay() {
         {toOpen && suggestions.length > 0 && (
           <ul className="absolute inset-x-0 top-[calc(100%+4px)] z-20 max-h-[260px] overflow-y-auto rounded-xl bg-white py-1 shadow-dropdown">
             {suggestions.map((u) => (
-              <li key={u.id}>
+              <li key={u.id || 'adhoc'}>
                 <button
                   onClick={() => {
                     setRecipient(u)
@@ -247,12 +299,17 @@ export default function Pay() {
                   className="flex w-full items-center gap-3 px-3 py-2.5 text-left hover:bg-surface-hover"
                 >
                   <Avatar user={u} size={38} />
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <div className="truncate text-[14px] font-semibold text-ink">
                       {u.displayName}
                     </div>
                     <div className="truncate text-[13px] text-ink-soft">@{u.handle}</div>
                   </div>
+                  {u.adHoc && (
+                    <span className="shrink-0 rounded-pill bg-venmo-blueLight px-2 py-0.5 text-[11px] font-bold text-venmo-blueDark">
+                      New
+                    </span>
+                  )}
                 </button>
               </li>
             ))}

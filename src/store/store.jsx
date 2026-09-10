@@ -175,23 +175,33 @@ export function StoreProvider({ children }) {
 
   // ---- Admin / Mock Data Manager ------------------------------------------
 
-  const addMockUser = useCallback(({ displayName, handle, balance, bio, avatar }) => {
-    const id = newId('u')
-    const cleanHandle = (handle || displayName || 'user')
-      .toLowerCase()
-      .replace(/[^a-z0-9_.]/g, '')
-    const user = {
-      id,
-      displayName: displayName || 'New User',
-      handle: cleanHandle || id,
-      balance: Number.isFinite(Number(balance)) ? Math.round(Number(balance) * 100) / 100 : 0,
-      bio: bio || '',
-      avatar: avatar || avatarFor(id + cleanHandle, displayName || cleanHandle),
-      joined: new Date().toISOString().slice(0, 10),
-    }
-    setDB((prev) => ({ ...prev, users: [...prev.users, user] }))
-    return user
-  }, [])
+  const addMockUser = useCallback(
+    ({ displayName, handle, balance, bio, avatar }) => {
+      const id = newId('u')
+      const base =
+        (handle || displayName || 'user').toLowerCase().replace(/[^a-z0-9_.]/g, '') || id
+
+      // Keep handles unique — ad-hoc recipients are named from free text, so
+      // collisions with the seeded personas are easy to hit. Built here rather
+      // than inside the updater so the caller gets the real record back.
+      const taken = new Set(db.users.map((u) => u.handle))
+      let cleanHandle = base
+      for (let n = 2; taken.has(cleanHandle); n++) cleanHandle = `${base}${n}`
+
+      const user = {
+        id,
+        displayName: displayName || 'New User',
+        handle: cleanHandle,
+        balance: Number.isFinite(Number(balance)) ? Math.round(Number(balance) * 100) / 100 : 0,
+        bio: bio || '',
+        avatar: avatar || avatarFor(id + cleanHandle, displayName || cleanHandle),
+        joined: new Date().toISOString().slice(0, 10),
+      }
+      setDB((prev) => ({ ...prev, users: [...prev.users, user] }))
+      return user
+    },
+    [db.users]
+  )
 
   const updateMockUser = useCallback((id, patch) => {
     setDB((prev) => ({

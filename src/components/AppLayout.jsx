@@ -86,7 +86,7 @@ function BottomNav() {
                 aria-label="Pay or Request"
               >
                 <span className="-mt-[40px] flex h-14 w-14 items-center justify-center rounded-full bg-nav-idle ring-[5px] ring-white">
-                  <VeeMark size={34} />
+                  <VeeMark />
                 </span>
                 <span className="mt-[18px] whitespace-nowrap text-[15px] font-semibold text-nav-idle">
                   {t.label}
