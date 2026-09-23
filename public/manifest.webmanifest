@@ -1,0 +1,9 @@
+{
+  "name": "PayClone Demo",
+  "short_name": "PayClone",
+  "start_url": "/",
+  "display": "fullscreen",
+  "background_color": "#008CFF",
+  "theme_color": "#008CFF",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

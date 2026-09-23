@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { useStore } from '../store/store.jsx'
 import Icon from '../components/Icon.jsx'
+import { enterFullscreen } from '../lib/fullscreen.js'
 
 export default function Login() {
   const { login } = useStore()
   const [busy, setBusy] = useState(false)
 
   function enter() {
+    enterFullscreen() // must run inside the click, before any await/timeout
     setBusy(true)
     setTimeout(login, 550) // brief mock "signing in" beat
   }
