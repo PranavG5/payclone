@@ -29,7 +29,6 @@ export default function App() {
         <Route path="/pay" element={<Pay />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/cards" element={<Placeholder kind="cards" />} />
-        <Route path="/crypto" element={<Placeholder kind="crypto" />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

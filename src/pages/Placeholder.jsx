@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon.jsx'
 
-// Cards and Crypto exist so the five-tab bar in the reference is complete.
+// Cards exists so the five-tab bar in the reference is complete.
 // They are deliberately stubs — this project is a study of the home, search,
 // profile, payment, and demo-data surfaces.
 const CONTENT = {
@@ -9,11 +9,6 @@ const CONTENT = {
     icon: 'card',
     title: 'Cards',
     body: 'A card hub would live here — balance, spending activity, and card controls.',
-  },
-  crypto: {
-    icon: 'crypto',
-    title: 'Crypto',
-    body: 'A crypto hub would live here — holdings, price charts, and buy/sell flows.',
   },
 }
 

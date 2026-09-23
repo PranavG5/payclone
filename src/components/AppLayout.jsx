@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom'
 import { useStore } from '../store/store.jsx'
 import Icon from './Icon.jsx'
+import { enterFullscreen } from '../lib/fullscreen.js'
 import { HomeGlyph, CardGlyph, CryptoGlyph, VeeMark } from './NavGlyph.jsx'
 
 // Header title per route. Home has no header at all — the reference puts the
@@ -13,7 +14,6 @@ function useTitle() {
   if (pathname.startsWith('/pay')) return 'Pay & Request'
   if (pathname.startsWith('/settings')) return 'Me'
   if (pathname.startsWith('/cards')) return 'Cards'
-  if (pathname.startsWith('/crypto')) return 'Crypto'
   const profile = pathname.match(/^\/u\/([^/]+)/)
   if (profile) return getUser(profile[1])?.displayName || 'Profile'
   return 'payclone'
@@ -47,7 +47,8 @@ const TABS = [
   // The reference carries a notification dot here; it is decorative.
   { to: '/cards', label: 'Cards', icon: 'card', badge: true },
   { to: '/pay', label: 'Pay/Request', center: true },
-  { to: '/crypto', label: 'Crypto', icon: 'crypto' },
+  // Looks like the Crypto tab, but is secretly a fullscreen toggle.
+  { label: 'Crypto', icon: 'crypto', action: enterFullscreen },
   // "Me" is the account hub — profile, demo controls, sign out.
   { to: '/settings', label: 'Me', avatar: true },
 ]
@@ -74,7 +75,7 @@ function BottomNav() {
           midpoint lands exactly on the bar's top edge. */}
       <div className="flex items-start pb-2.5 pt-3">
         {TABS.map((t) => {
-          const active = isActive(t.to)
+          const active = t.to ? isActive(t.to) : false
           const tint = active ? 'text-nav-active' : 'text-nav-idle'
 
           if (t.center) {
@@ -96,6 +97,21 @@ function BottomNav() {
           }
 
           const Glyph = GLYPH[t.icon]
+          if (t.action) {
+            return (
+              <button
+                key={t.label}
+                type="button"
+                onClick={t.action}
+                className="flex flex-1 flex-col items-center"
+              >
+                <Glyph className="text-nav-idle" />
+                <span className="mt-[10px] whitespace-nowrap text-[15px] font-semibold text-nav-idle">
+                  {t.label}
+                </span>
+              </button>
+            )
+          }
           return (
             <Link key={t.to} to={t.to} className="flex flex-1 flex-col items-center">
               <span className="relative">
@@ -141,7 +157,7 @@ export default function AppLayout() {
     // The column owns its own scrolling so the chrome stays fixed, exactly
     // like a native app shell.
     <div className="flex h-[100dvh] justify-center bg-surface-app">
-      <div className="relative flex h-full w-full max-w-[430px] flex-col overflow-hidden bg-surface-feed shadow-[0_0_40px_rgba(0,0,0,0.08)]">
+      <div className="relative flex h-full w-full max-w-[430px] flex-col overflow-hidden bg-surface-feed pt-[env(safe-area-inset-top)] shadow-[0_0_40px_rgba(0,0,0,0.08)]">
         {title && <MobileHeader title={title} canGoBack={canGoBack} />}
 
         <main className="flex-1 overflow-y-auto overflow-x-hidden">
