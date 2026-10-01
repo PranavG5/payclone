@@ -1,7 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { useStore } from './store/store.jsx'
 import AppLayout from './components/AppLayout.jsx'
-import Login from './pages/Login.jsx'
 import Home from './pages/Home.jsx'
 import Search from './pages/Search.jsx'
 import Profile from './pages/Profile.jsx'
@@ -10,16 +8,6 @@ import Settings from './pages/Settings.jsx'
 import Placeholder from './pages/Placeholder.jsx'
 
 export default function App() {
-  const { loggedIn } = useStore()
-
-  if (!loggedIn) {
-    return (
-      <Routes>
-        <Route path="*" element={<Login />} />
-      </Routes>
-    )
-  }
-
   return (
     <Routes>
       <Route element={<AppLayout />}>

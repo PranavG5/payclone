@@ -18,7 +18,7 @@ function Row({ label, value }) {
 }
 
 export default function Settings() {
-  const { currentUser, logout, db } = useStore()
+  const { currentUser, db } = useStore()
   const [showManager, setShowManager] = useState(false)
   const [editing, setEditing] = useState(false)
   const [toast, setToast] = useState('')
@@ -113,13 +113,6 @@ export default function Settings() {
           <MockDataManager />
         </div>
       )}
-
-      <button
-        onClick={logout}
-        className="card w-full px-5 py-4 text-left text-[15px] font-semibold text-state-red transition-colors hover:bg-surface-hover"
-      >
-        Sign out
-      </button>
     </div>
   )
 }

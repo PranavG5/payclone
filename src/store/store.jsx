@@ -3,7 +3,6 @@ import { generateSeed, CURRENT_USER_ID } from '../data/seed.js'
 import { avatarFor } from '../data/avatar.js'
 
 const STORAGE_KEY = 'payclone.db.v3'
-const SESSION_KEY = 'payclone.session.v1'
 
 const StoreContext = createContext(null)
 
@@ -34,13 +33,6 @@ function newId(prefix) {
 
 export function StoreProvider({ children }) {
   const [db, setDB] = useState(loadDB)
-  const [loggedIn, setLoggedIn] = useState(() => {
-    try {
-      return sessionStorage.getItem(SESSION_KEY) === '1'
-    } catch {
-      return false
-    }
-  })
   const saveTimer = useRef(null)
 
   // Debounced persistence.
@@ -55,20 +47,6 @@ export function StoreProvider({ children }) {
     }, 150)
     return () => saveTimer.current && clearTimeout(saveTimer.current)
   }, [db])
-
-  const login = useCallback(() => {
-    try {
-      sessionStorage.setItem(SESSION_KEY, '1')
-    } catch { /* ignore */ }
-    setLoggedIn(true)
-  }, [])
-
-  const logout = useCallback(() => {
-    try {
-      sessionStorage.removeItem(SESSION_KEY)
-    } catch { /* ignore */ }
-    setLoggedIn(false)
-  }, [])
 
   // ---- Selectors -----------------------------------------------------------
 
@@ -282,9 +260,6 @@ export function StoreProvider({ children }) {
   const value = useMemo(
     () => ({
       db,
-      loggedIn,
-      login,
-      logout,
       currentUser,
       usersById,
       getUser,
@@ -304,7 +279,7 @@ export function StoreProvider({ children }) {
       clearAllData,
     }),
     [
-      db, loggedIn, login, logout, currentUser, usersById, getUser, searchUsers,
+      db, currentUser, usersById, getUser, searchUsers,
       feedFor, userTransactions, createTransaction, toggleLike, addMockUser,
       updateMockUser, deleteMockUser, regenerateAvatar, resetData, clearAllData,
       updateProfile, isHandleTaken,

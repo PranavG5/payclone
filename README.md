@@ -49,7 +49,7 @@ src/
     AvatarPicker.jsx      Shared upload / generate avatar control
     Avatar.jsx, Icon.jsx, FeedSkeleton.jsx
   pages/
-    Login.jsx  Home.jsx  Search.jsx  Profile.jsx  Pay.jsx  Settings.jsx
+    Home.jsx  Search.jsx  Profile.jsx  Pay.jsx  Settings.jsx
 ```
 
 ### Design system

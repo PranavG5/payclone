@@ -48,7 +48,7 @@ const TABS = [
   { to: '/cards', label: 'Cards', icon: 'card', badge: true },
   { to: '/pay', label: 'Pay/Request', center: true },
   { to: '/crypto', label: 'Crypto', icon: 'crypto' },
-  // "Me" is the account hub — profile, demo controls, sign out.
+  // "Me" is the account hub — profile and demo controls.
   { to: '/settings', label: 'Me', avatar: true },
 ]
 
